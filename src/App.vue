@@ -1,28 +1,58 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-container>
+      <v-btn
+        elevation="3"
+        outlined
+        rounded
+        @click="popupIsActive = true"
+        :disabled="popupIsActive"
+      >Добавить</v-btn>
+      <Form
+        v-if="popupIsActive"
+        @closePopup="popupIsActive = false"
+        :users="users"
+        :ifUsersExist="ifUsersExist"
+      />
+      <v-data-table
+        class="mt-16"
+        v-if="ifUsersExist"
+        :headers="headers"
+        :items="users"
+      ></v-data-table>
+
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Form from "@/components/Form.vue";
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      users: [],
+      popupIsActive: false,
+      headers: [
+        { text: "Имя", value: "name" },
+        { text: "Телефон", value: "phone" },
+      ],
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    Form,
+  },
+  computed: {
+    ifUsersExist() {
+      return this.users.length > 0;
+    },
+  },
+  mounted() {
+    if (localStorage.getItem("users")) {
+      this.users = JSON.parse(localStorage.getItem("users")) || [];
+    }
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
