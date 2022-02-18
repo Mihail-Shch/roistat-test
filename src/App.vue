@@ -7,11 +7,12 @@
         rounded
         @click="popupIsActive = true"
         :disabled="popupIsActive"
-      >Добавить</v-btn>
+        >Добавить</v-btn
+      >
       <Form
         v-if="popupIsActive"
         @closePopup="popupIsActive = false"
-        :users="users"
+        v-model="users"
         :ifUsersExist="ifUsersExist"
       />
       <v-data-table
@@ -20,7 +21,6 @@
         :headers="headers"
         :items="users"
       ></v-data-table>
-
     </v-container>
   </v-app>
 </template>

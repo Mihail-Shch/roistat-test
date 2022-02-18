@@ -1,11 +1,8 @@
 <template>
   <form class="form pa-3 mt-6">
     <div class="d-flex align-center justify-space-between mb-9">
-      <p class="form__name"> Добавление пользователя</p>
-      <p
-        class="form__close"
-        @click="$emit('closePopup')"
-      >x</p>
+      <p class="form__name">Добавление пользователя</p>
+      <p class="form__close" @click="$emit('closePopup')">x</p>
     </div>
     <div class="d-flex align-center justify-space-between mb-4">
       <p class="form__name">Имя</p>
@@ -30,39 +27,32 @@
       v-if="ifUsersExist"
     >
       <p class="form__name">Начальник</p>
-      <select
-        class="form__select form__input pa-2"
-        v-model="parentId"
-      >
+      <select class="form__select form__input pa-2" v-model="parentId">
         <option :value="null">Нет начальника</option>
-        <option
-          v-for="user in users"
-          :key="user.id"
-          :value="user.id"
-        >{{user.name}}</option>
+        <option v-for="user in localValue" :key="user.id" :value="user.id">
+          {{ user.name }}
+        </option>
       </select>
     </div>
-    <v-btn
-      class="form__btn d-flex"
-      outlined
-      rounded
-      @click="addUser()"
-    >Сохранить</v-btn>
+    <v-btn class="form__btn d-flex" outlined rounded @click="addUser()"
+      >Сохранить</v-btn
+    >
   </form>
 </template>
 
 <script>
 export default {
+  props: {
+    value: Array,
+    ifUsersExist: Boolean,
+  },
   data() {
     return {
       name: "",
       phone: "",
       parentId: null,
+      localValue: [],
     };
-  },
-  props: {
-    users: Array,
-    ifUsersExist: Boolean,
   },
   methods: {
     addUser() {
@@ -77,19 +67,23 @@ export default {
         parentId: this.parentId,
       };
 
-      this.users.push(user);
+      this.localValue.push(user);
+      this.$emit("input", this.localValue);
 
       this.resetForm();
       this.saveUsers();
     },
     saveUsers() {
-      const parsedUsers = JSON.stringify(this.users);
+      const parsedUsers = JSON.stringify(this.localValue);
       localStorage.setItem("users", parsedUsers);
     },
     resetForm() {
       this.name = "";
       this.phone = "";
     },
+  },
+  created() {
+    this.localValue = this.value;
   },
 };
 </script>
