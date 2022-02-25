@@ -8,6 +8,7 @@
       <p class="form__name">Имя</p>
       <input
         type="text"
+        name="userName"
         class="form__input pa-2"
         v-model="name"
         placeholder="Введите имя..."
@@ -16,7 +17,8 @@
     <div class="d-flex align-center justify-space-between mb-4">
       <p class="form__name">Телефон</p>
       <input
-        type="text"
+        type="number"
+        name="userPhone"
         class="form__input pa-2"
         v-model="phone"
         placeholder="Введите телефон..."
@@ -42,6 +44,7 @@
 
 <script>
 export default {
+  name: "Form",
   props: {
     value: Array,
     ifUsersExist: Boolean,
@@ -120,5 +123,15 @@ export default {
   background: url("~@/assets/arrow.svg") right center no-repeat;
   background-size: 20px 20px;
   background-position-x: 98%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>
