@@ -17,11 +17,12 @@
     <div class="d-flex align-center justify-space-between mb-4">
       <p class="form__name">Телефон</p>
       <input
-        type="number"
+        type="tel"
+        pattern="8-\d{3}-\d{3}-\d{2}-\d{2}"
         name="userPhone"
         class="form__input pa-2"
         v-model="phone"
-        placeholder="Введите телефон..."
+        placeholder="Введите телефон формата 8-ххх-хх-хх"
       />
     </div>
     <div
@@ -52,7 +53,7 @@ export default {
   data() {
     return {
       name: "",
-      phone: "",
+      phone: null,
       parentId: null,
       localValue: [],
     };
@@ -123,15 +124,5 @@ export default {
   background: url("~@/assets/arrow.svg") right center no-repeat;
   background-size: 20px 20px;
   background-position-x: 98%;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
 </style>

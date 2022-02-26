@@ -49,7 +49,11 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("users")) {
-      this.users = JSON.parse(localStorage.getItem("users")) || [];
+      try {
+        this.users = JSON.parse(localStorage.getItem("users"));
+      } catch (e) {
+        this.users = [];
+      }
     }
   },
 };
